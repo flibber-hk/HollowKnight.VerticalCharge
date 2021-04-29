@@ -41,7 +41,6 @@ namespace VerticalCharge
             upState.ClearTransitions();
             upState.GetActionOfType<SetFsmFloat>().setValue.Value = 90f;
             upState.GetActionOfType<SetRotation>().yAngle.Value = 0f;
-            upState.AddFirstAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
             self.AddState(upState);
 
             FsmState directionCheck = self.GetState("Direction");
@@ -59,11 +58,7 @@ namespace VerticalCharge
                 Name = "Up Dash Start VC"
             };
             upDashStart.ClearTransitions();
-            upDashStart.AddFirstAction(new ExecuteLambda(() => 
-            {
-                // Rotate sprite
-                Ref.Hero.transform.Rotate(0, 0, -90 * Ref.Hero.transform.localScale.x);
-            }));
+            upDashStart.AddFirstAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
             self.AddState(upDashStart);
 
             // Dashing Up
@@ -98,12 +93,10 @@ namespace VerticalCharge
             // Reset Vertical Charge variable
             self.GetState("Air Cancel").AddFirstAction(new ExecuteLambda(() => 
             {
-                if (VerticalCharge.instance.VerticalCharging) Ref.Hero.transform.Rotate(0, 0, 90 * Ref.Hero.transform.localScale.x);
                 VerticalCharge.instance.VerticalCharging = false;
             }));
             self.GetState("Hit Wall").AddFirstAction(new ExecuteLambda(() =>
             {
-                if (VerticalCharge.instance.VerticalCharging) Ref.Hero.transform.Rotate(0, 0, 90 * Ref.Hero.transform.localScale.x);
                 VerticalCharge.instance.VerticalCharging = false;
             }));
 

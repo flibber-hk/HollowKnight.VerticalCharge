@@ -4,13 +4,32 @@ using System.Linq;
 using System.Text;
 using Modding;
 using SereCore;
+using UnityEngine.SceneManagement;
 
 namespace VerticalCharge
 {
     public class VerticalCharge : Mod, ITogglableMod
     {
 
-        public bool VerticalCharging;
+        private bool _verticalCharging;
+
+        public bool VerticalCharging
+        {
+            get => _verticalCharging;
+
+            set
+            {
+                if (value && !_verticalCharging)
+                {
+                    Ref.Hero.transform.Rotate(0, 0, -90 * Ref.Hero.transform.localScale.x);
+                }
+                else if (!value && _verticalCharging)
+                {
+                    Ref.Hero.transform.Rotate(0, 0, 90 * Ref.Hero.transform.localScale.x);
+                }
+                _verticalCharging = value;
+            }
+        }
 
         internal static VerticalCharge instance;
 
@@ -18,23 +37,26 @@ namespace VerticalCharge
         {
             instance = this;
 
-            VerticalCharging = false;
+            _verticalCharging = false;
 
             instance.Log("Initializing");
 
             SuperdashFsmEdit.Hook();
             On.CameraTarget.Update += FixVerticalCamera;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ResetVerticalCharge;
         }
+
         public void Unload()
         {
             SuperdashFsmEdit.UnHook();
             On.CameraTarget.Update -= FixVerticalCamera;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= ResetVerticalCharge;
         }
 
 
         public override string GetVersion()
         {
-            return "TEST";
+            return "0.1";
         }
 
         private void FixVerticalCamera(On.CameraTarget.orig_Update orig, CameraTarget self)
@@ -52,6 +74,11 @@ namespace VerticalCharge
                     }
                 }
             }
+        }
+
+        private void ResetVerticalCharge(Scene arg0, Scene arg1)
+        {
+            VerticalCharging = false;
         }
     }
 }
