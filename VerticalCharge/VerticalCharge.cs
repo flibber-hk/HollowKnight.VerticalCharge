@@ -3,73 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Modding;
-using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Actions;
 using SereCore;
 
 namespace VerticalCharge
 {
     public class VerticalCharge : Mod, ITogglableMod
     {
+
+        public bool VerticalCharging;
+
         internal static VerticalCharge instance;
 
         public override void Initialize()
         {
             instance = this;
 
+            VerticalCharging = false;
+
             instance.Log("Initializing");
 
-            Hook();
+            SuperdashFsmEdit.Hook();
+            On.CameraTarget.Update += FixVerticalCamera;
         }
+        public void Unload()
+        {
+            SuperdashFsmEdit.UnHook();
+            On.CameraTarget.Update -= FixVerticalCamera;
+        }
+
 
         public override string GetVersion()
         {
             return "TEST";
         }
 
-        private void Hook()
+        private void FixVerticalCamera(On.CameraTarget.orig_Update orig, CameraTarget self)
         {
-            On.PlayMakerFSM.OnEnable += AllowVerticalSuperdash;
-        }
-        private void UnHook()
-        {
-            On.PlayMakerFSM.OnEnable -= AllowVerticalSuperdash;
-        }
-
-
-        private void AllowVerticalSuperdash(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
-        {
-            if (self.FsmName == "Superdash" && self.gameObject.name == "Knight")
+            orig(self);
+            
+            if (self.hero_ctrl != null && Ref.GM.IsGameplayScene())
             {
-                FsmState right = self.GetState("Right");
-                right.GetActionOfType<SetFsmFloat>().setValue.Value = 90f;
-                right.GetActionOfType<SetRotation>().yAngle.Value = 180f;
-
-                FsmState dashing = self.GetState("Dashing");
-                SetVelocity2d setvel = dashing.GetActionOfType<SetVelocity2d>();
-                FsmFloat tmp = setvel.x;
-                setvel.x = setvel.y;
-                setvel.y = tmp;
-                GetVelocity2d getvel = dashing.GetActionOfType<GetVelocity2d>();
-                FsmFloat tmp2 = getvel.x;
-                getvel.x = getvel.y;
-                getvel.y = tmp2;
-
-                FsmState cancelable = self.GetState("Cancelable");
-                SetVelocity2d setvelC = cancelable.GetActionOfType<SetVelocity2d>();
-                FsmFloat tmpC = setvelC.x;
-                setvelC.x = setvelC.y;
-                setvelC.y = tmpC;
-                GetVelocity2d getvelC = cancelable.GetActionOfType<GetVelocity2d>();
-                FsmFloat tmp2C = getvelC.x;
-                getvelC.x = getvelC.y;
-                getvelC.y = tmp2C;
+                if (self.superDashing)
+                {
+                    if (VerticalCharging)     // if vertical cdash
+                    {
+                        self.cameraCtrl.lookOffset += Math.Abs(self.dashOffset);
+                        self.dashOffset = 0;
+                    }
+                }
             }
-        }
-
-        public void Unload()
-        {
-            UnHook();
         }
     }
 }

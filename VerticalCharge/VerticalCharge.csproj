@@ -54,6 +54,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\FsmExtensions.cs" />
+    <Compile Include="FsmStateActions\ExecuteLambda.cs" />
+    <Compile Include="SuperdashFsmEdit.cs" />
     <Compile Include="VerticalCharge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
