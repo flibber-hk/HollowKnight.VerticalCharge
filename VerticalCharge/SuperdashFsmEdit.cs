@@ -59,6 +59,7 @@ namespace VerticalCharge
             };
             upDashStart.ClearTransitions();
             upDashStart.AddFirstAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
+            upDashStart.AddFirstAction(upDashStart.GetActionOfType<ActivateGameObject>());
             self.AddState(upDashStart);
 
             // Dashing Up
