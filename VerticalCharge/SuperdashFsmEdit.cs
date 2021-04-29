@@ -59,7 +59,7 @@ namespace VerticalCharge
                 Name = "Up Dash Start VC"
             };
             upDashStart.ClearTransitions();
-            upDashStart.AddPenultimateAction(new ExecuteLambda(() => 
+            upDashStart.AddFirstAction(new ExecuteLambda(() => 
             {
                 // Rotate sprite
                 Ref.Hero.transform.Rotate(0, 0, -90 * Ref.Hero.transform.localScale.x);
