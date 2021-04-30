@@ -30,7 +30,8 @@ namespace VerticalCharge
             {
                 // The KP top transition is the only one that needs to be disabled; the others have collision
                 case SceneNames.Tutorial_01:
-                    GameObject.Find("top1").SetActive(false);
+                    if (GameObject.Find("top1") is GameObject topTransition)
+                        topTransition.SetActive(false);
                     break;
             }
         }
