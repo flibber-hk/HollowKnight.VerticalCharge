@@ -111,6 +111,10 @@ namespace VerticalCharge
             {
                 VerticalCharge.instance.VerticalCharging = false;
             }));
+            self.GetState("Cancel").AddFirstAction(new ExecuteLambda(() =>
+            {
+                VerticalCharge.instance.VerticalCharging = false;
+            }));
             self.GetState("Hit Wall").AddFirstAction(new ExecuteLambda(() =>
             {
                 VerticalCharge.instance.VerticalCharging = false;
