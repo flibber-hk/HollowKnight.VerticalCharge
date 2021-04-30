@@ -52,6 +52,7 @@ namespace VerticalCharge
             SuperdashFsmEdit.Hook();
             On.CameraTarget.Update += FixVerticalCamera;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ResetVerticalCharge;
+            FixVerticalTransitions.Hook();
         }
 
         public void Unload()
@@ -59,6 +60,7 @@ namespace VerticalCharge
             SuperdashFsmEdit.UnHook();
             On.CameraTarget.Update -= FixVerticalCamera;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= ResetVerticalCharge;
+            FixVerticalTransitions.UnHook();
         }
 
 
