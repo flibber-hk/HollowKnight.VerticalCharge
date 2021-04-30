@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Modding;
 using SereCore;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace VerticalCharge
@@ -25,6 +26,13 @@ namespace VerticalCharge
                 }
                 else if (!value && _verticalCharging)
                 {
+                    // We need to set the SD Burst inactive before un-rotating the hero,
+                    // so it doesn't rotate with it
+                    if (GameObject.Find("SD Burst") is GameObject burst)
+                    {
+                        burst.transform.parent = Ref.Hero.gameObject.transform;
+                        burst.SetActive(false);
+                    }
                     Ref.Hero.transform.Rotate(0, 0, 90 * Ref.Hero.transform.localScale.x);
                 }
                 _verticalCharging = value;
