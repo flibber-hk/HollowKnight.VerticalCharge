@@ -34,15 +34,28 @@ namespace VerticalCharge
                 return;
             }
 
-            FsmState upState = new FsmState(self.GetState("Right"))
+            FsmState upDirectionCheck = new FsmState(self.GetState("Direction"))
             {
-                Name = "Up VC"
+                Name = "Up Direction Check VC"
             };
-            upState.ClearTransitions();
-            upState.GetActionOfType<SetFsmFloat>().setValue.Value = 90f;
-            upState.GetActionOfType<SetRotation>().yAngle.Value = 0f;
-            upState.AddFirstAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
-            self.AddState(upState);
+            upDirectionCheck.ClearTransitions();
+            self.AddState(upDirectionCheck);
+
+            FsmState upStateR = new FsmState(self.GetState("Right"))
+            {
+                Name = "Up Right VC"
+            };
+            upStateR.ClearTransitions();
+            upStateR.AddAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
+            self.AddState(upStateR);
+
+            FsmState upStateL = new FsmState(self.GetState("Right"))
+            {
+                Name = "Up Left VC"
+            };
+            upStateL.ClearTransitions();
+            upStateL.AddAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
+            self.AddState(upStateL);
 
             FsmState directionCheck = self.GetState("Direction");
             directionCheck.AddFirstAction(new ExecuteLambda(() =>
@@ -85,8 +98,11 @@ namespace VerticalCharge
             self.AddState(upCancelable);
 
             // Adding transitions
-            directionCheck.AddTransition("BUTTON UP", upState.Name);
-            upState.AddTransition("FINISHED", upDashStart.Name);
+            directionCheck.AddTransition("BUTTON UP", upDirectionCheck.Name);
+            upDirectionCheck.AddTransition("LEFT", upStateL.Name);
+            upDirectionCheck.AddTransition("RIGHT", upStateR.Name);
+            upStateR.AddTransition("FINISHED", upDashStart.Name);
+            upStateL.AddTransition("FINISHED", upDashStart.Name);
             upDashStart.AddTransition("FINISHED", upDashing.Name);
             upDashing.AddTransition("WAIT", upCancelable.Name);
 
