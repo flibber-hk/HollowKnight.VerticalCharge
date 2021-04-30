@@ -41,6 +41,7 @@ namespace VerticalCharge
             upState.ClearTransitions();
             upState.GetActionOfType<SetFsmFloat>().setValue.Value = 90f;
             upState.GetActionOfType<SetRotation>().yAngle.Value = 0f;
+            upState.AddFirstAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
             self.AddState(upState);
 
             FsmState directionCheck = self.GetState("Direction");
@@ -58,8 +59,6 @@ namespace VerticalCharge
                 Name = "Up Dash Start VC"
             };
             upDashStart.ClearTransitions();
-            upDashStart.AddFirstAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
-            upDashStart.AddFirstAction(upDashStart.GetActionOfType<ActivateGameObject>());
             self.AddState(upDashStart);
 
             // Dashing Up
