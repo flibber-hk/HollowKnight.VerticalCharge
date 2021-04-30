@@ -121,13 +121,13 @@ namespace VerticalCharge
             }));
 
             // Logging
-            foreach (FsmState state in self.FsmStates)
-            {
-                state.AddFirstAction(new ExecuteLambda(() =>
-                {
-                    VerticalCharge.instance.Log("VC STATELOG " + state.Name);
-                }));
-            }
+            //foreach (FsmState state in self.FsmStates)
+            //{
+            //    state.AddFirstAction(new ExecuteLambda(() =>
+            //    {
+            //        VerticalCharge.instance.Log("VC STATELOG " + state.Name);
+            //    }));
+            //}
         }
     }
 }
