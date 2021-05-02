@@ -67,7 +67,7 @@ namespace VerticalCharge
 
         public override string GetVersion()
         {
-            return "0.1";
+            return "1.0";
         }
 
         private void FixVerticalCamera(On.CameraTarget.orig_Update orig, CameraTarget self)
