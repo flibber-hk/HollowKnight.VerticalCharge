@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SereCore;
 using UnityEngine;
 
 namespace VerticalCharge
@@ -29,7 +28,7 @@ namespace VerticalCharge
             switch (self.sceneName)
             {
                 // The KP top transition is the only one that needs to be disabled; the others have collision
-                case SceneNames.Tutorial_01:
+                case "Tutorial_01":
                     if (GameObject.Find("top1") is GameObject topTransition)
                         topTransition.SetActive(false);
                     break;

@@ -37,9 +37,6 @@
     <Reference Include="PlayMaker">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\PlayMaker.dll</HintPath>
     </Reference>
-    <Reference Include="SereCore">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\SereCore.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,7 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\FsmExtensions.cs" />
+    <Compile Include="Extensions\PlaymakerExtensions.cs" />
     <Compile Include="FixVerticalTransitions.cs" />
     <Compile Include="FsmStateActions\ExecuteLambda.cs" />
     <Compile Include="SuperdashFsmEdit.cs" />

@@ -5,10 +5,9 @@ using System.Text;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using Modding;
-using SereCore;
 using UnityEngine;
-using VerticalCharge.FsmStateActions;
 using VerticalCharge.Extensions;
+using VerticalCharge.FsmStateActions;
 
 namespace VerticalCharge
 {
@@ -60,7 +59,7 @@ namespace VerticalCharge
             FsmState directionCheck = self.GetState("Direction");
             directionCheck.AddFirstAction(new ExecuteLambda(() =>
             {
-                if (Ref.Input.inputActions.up.IsPressed)
+                if (GameManager.instance.inputHandler.inputActions.up.IsPressed)
                 {
                     self.SendEvent("BUTTON UP"); // This should be the "UP PRESSED" event, but IDK if we can use events not in the list
                 }

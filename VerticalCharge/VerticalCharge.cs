@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Modding;
-using SereCore;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,7 +21,7 @@ namespace VerticalCharge
             {
                 if (value && !_verticalCharging)
                 {
-                    Ref.Hero.transform.Rotate(0, 0, -90 * Ref.Hero.transform.localScale.x);
+                    HeroController.instance.transform.Rotate(0, 0, -90 * HeroController.instance.transform.localScale.x);
                 }
                 else if (!value && _verticalCharging)
                 {
@@ -30,10 +29,10 @@ namespace VerticalCharge
                     // so it doesn't rotate with it
                     if (GameObject.Find("SD Burst") is GameObject burst)
                     {
-                        burst.transform.parent = Ref.Hero.gameObject.transform;
+                        burst.transform.parent = HeroController.instance.gameObject.transform;
                         burst.SetActive(false);
                     }
-                    Ref.Hero.transform.Rotate(0, 0, 90 * Ref.Hero.transform.localScale.x);
+                    HeroController.instance.transform.Rotate(0, 0, 90 * HeroController.instance.transform.localScale.x);
                 }
                 _verticalCharging = value;
             }
@@ -73,7 +72,7 @@ namespace VerticalCharge
         {
             orig(self);
             
-            if (self.hero_ctrl != null && Ref.GM.IsGameplayScene())
+            if (self.hero_ctrl != null && GameManager.instance.IsGameplayScene())
             {
                 if (self.superDashing)
                 {
