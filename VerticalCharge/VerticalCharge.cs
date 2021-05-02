@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace VerticalCharge
 {
-    public class VerticalCharge : Mod, ITogglableMod
+    public class VerticalCharge : Mod
     {
 
         private bool _verticalCharging;
@@ -54,6 +54,7 @@ namespace VerticalCharge
             FixVerticalTransitions.Hook();
         }
 
+        /* There's no easy way to reset the superdash FSM on unload, so it's not Toggleable
         public void Unload()
         {
             SuperdashFsmEdit.UnHook();
@@ -61,6 +62,7 @@ namespace VerticalCharge
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= ResetVerticalCharge;
             FixVerticalTransitions.UnHook();
         }
+        */
 
 
         public override string GetVersion()

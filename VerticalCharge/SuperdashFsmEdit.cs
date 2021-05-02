@@ -78,10 +78,8 @@ namespace VerticalCharge
             {
                 Name = "Up Dashing VC"
             };
-            SetVelocity2d setvel = upDashing.GetActionOfType<SetVelocity2d>();
-            (setvel.x, setvel.y) = (setvel.y, setvel.x);
-            GetVelocity2d getvel = upDashing.GetActionOfType<GetVelocity2d>();
-            (getvel.x, getvel.y) = (getvel.y, getvel.x);
+            upDashing.GetActionOfType<SetVelocity2d>().SwapXandY();
+            upDashing.GetActionOfType<GetVelocity2d>().SwapXandY();
             upDashing.RemoveTransitionsTo("Cancelable");
             self.AddState(upDashing);
 
@@ -90,10 +88,8 @@ namespace VerticalCharge
             {
                 Name = "Up Cancelable VC"
             };
-            SetVelocity2d setvelC = upCancelable.GetActionOfType<SetVelocity2d>();
-            (setvelC.x, setvelC.y) = (setvelC.y, setvelC.x);
-            GetVelocity2d getvelC = upCancelable.GetActionOfType<GetVelocity2d>();
-            (getvelC.x, getvelC.y) = (getvelC.y, getvelC.x);
+            upCancelable.GetActionOfType<SetVelocity2d>().SwapXandY();
+            upCancelable.GetActionOfType<GetVelocity2d>().SwapXandY();
             self.AddState(upCancelable);
 
             // Adding transitions

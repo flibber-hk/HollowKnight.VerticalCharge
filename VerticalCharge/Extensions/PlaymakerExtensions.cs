@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Actions;
 using Modding;
 
 namespace VerticalCharge.Extensions
@@ -83,6 +84,15 @@ namespace VerticalCharge.Extensions
             actions[self.Actions.Length] = action;
 
             self.Actions = actions;
+        }
+
+        public static void SwapXandY(this GetVelocity2d self)
+        {
+            (self.x, self.y) = (self.y, self.x);
+        }
+        public static void SwapXandY(this SetVelocity2d self)
+        {
+            (self.x, self.y) = (self.y, self.x);
         }
     }
 }
