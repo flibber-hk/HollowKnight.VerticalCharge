@@ -45,7 +45,7 @@ namespace VerticalCharge
                 Name = "Up Right VC"
             };
             upStateR.ClearTransitions();
-            upStateR.AddAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
+            upStateR.AddAction(new ExecuteLambda(() => SkillStates.VerticalCharging = true));
             self.AddState(upStateR);
 
             FsmState upStateL = new FsmState(self.GetState("Right"))
@@ -53,7 +53,7 @@ namespace VerticalCharge
                 Name = "Up Left VC"
             };
             upStateL.ClearTransitions();
-            upStateL.AddAction(new ExecuteLambda(() => VerticalCharge.instance.VerticalCharging = true));
+            upStateL.AddAction(new ExecuteLambda(() => SkillStates.VerticalCharging = true));
             self.AddState(upStateL);
 
             FsmState directionCheck = self.GetState("Direction");
@@ -104,15 +104,15 @@ namespace VerticalCharge
             // Reset Vertical Charge variable
             self.GetState("Air Cancel").AddFirstAction(new ExecuteLambda(() => 
             {
-                VerticalCharge.instance.VerticalCharging = false;
+                SkillStates.VerticalCharging = false;
             }));
             self.GetState("Cancel").AddFirstAction(new ExecuteLambda(() =>
             {
-                VerticalCharge.instance.VerticalCharging = false;
+                SkillStates.VerticalCharging = false;
             }));
             self.GetState("Hit Wall").AddFirstAction(new ExecuteLambda(() =>
             {
-                VerticalCharge.instance.VerticalCharging = false;
+                SkillStates.VerticalCharging = false;
             }));
 
             // Logging
