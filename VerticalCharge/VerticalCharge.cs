@@ -21,20 +21,12 @@ namespace VerticalCharge
             instance.Log("Initializing");
 
             SuperdashFsmEdit.Hook();
+            QuakeFsmEdit.Hook();
             On.CameraTarget.Update += FixVerticalCamera;
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ResetVerticalCharge;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ResetCharge;
             FixVerticalTransitions.Hook();
+            FixHorizontalTransitions.Hook();
         }
-
-        /* There's no easy way to reset the superdash FSM on unload, so it's not Toggleable
-        public void Unload()
-        {
-            SuperdashFsmEdit.UnHook();
-            On.CameraTarget.Update -= FixVerticalCamera;
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= ResetVerticalCharge;
-            FixVerticalTransitions.UnHook();
-        }
-        */
 
 
         public override string GetVersion()
@@ -59,9 +51,9 @@ namespace VerticalCharge
             }
         }
 
-        private void ResetVerticalCharge(Scene arg0, Scene arg1)
+        private void ResetCharge(Scene arg0, Scene arg1)
         {
-            SkillStates.VerticalCharging = false;
+            SkillStates.ResetStates();
         }
     }
 }

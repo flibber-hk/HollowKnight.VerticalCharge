@@ -94,5 +94,14 @@ namespace VerticalCharge.Extensions
         {
             (self.x, self.y) = (self.y, self.x);
         }
+
+        public static void SetBottomToLeft(this CheckCollisionSide self)
+        {
+            (self.bottomHitEvent, self.leftHitEvent) = (self.leftHitEvent, self.bottomHitEvent);
+        }
+        public static void SetBottomToRight(this CheckCollisionSide self)
+        {
+            (self.bottomHitEvent, self.rightHitEvent) = (self.rightHitEvent, self.bottomHitEvent);
+        }
     }
 }

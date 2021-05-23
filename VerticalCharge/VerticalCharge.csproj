@@ -52,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\PlaymakerExtensions.cs" />
+    <Compile Include="FixHorizontalTransitions.cs" />
     <Compile Include="FixVerticalTransitions.cs" />
     <Compile Include="FsmStateActions\ExecuteLambda.cs" />
+    <Compile Include="QuakeFsmEdit.cs" />
     <Compile Include="SkillStates.cs" />
     <Compile Include="SuperdashFsmEdit.cs" />
     <Compile Include="VerticalCharge.cs" />
