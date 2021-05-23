@@ -13,16 +13,29 @@ namespace VerticalCharge
 {
     internal static class SuperdashFsmEdit
     {
-        public static void Hook()
+        private static bool _active;
+
+        public static void Enable()
         {
-            UnHook();
-            On.PlayMakerFSM.OnEnable += AllowVerticalSuperdash;
+            _active = true;
+        }
+        public static void Disable()
+        {
+            _active = false;
+        }
+        public static bool IsActive
+        {
+            get => _active;
         }
 
-        public static void UnHook()
+        public static void Hook()
         {
-            On.PlayMakerFSM.OnEnable -= AllowVerticalSuperdash;
+            On.PlayMakerFSM.OnEnable += AllowVerticalSuperdash;
+            Enable();
         }
+
+
+
 
         private static void AllowVerticalSuperdash(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
         {
@@ -59,7 +72,7 @@ namespace VerticalCharge
             FsmState directionCheck = self.GetState("Direction");
             directionCheck.AddFirstAction(new ExecuteLambda(() =>
             {
-                if (GameManager.instance.inputHandler.inputActions.up.IsPressed)
+                if (GameManager.instance.inputHandler.inputActions.up.IsPressed && IsActive)
                 {
                     self.SendEvent("BUTTON UP"); // This should be the "UP PRESSED" event, but IDK if we can use events not in the list
                 }

@@ -13,16 +13,28 @@ namespace VerticalCharge
 {
     internal static class QuakeFsmEdit
     {
-        public static void Hook()
+        private static bool _active;
+
+        public static void Enable()
         {
-            UnHook();
-            On.PlayMakerFSM.OnEnable += AllowHorizontalQuake;
+            _active = true;
+        }
+        public static void Disable()
+        {
+            _active = false;
+        }
+        public static bool IsActive
+        {
+            get => _active;
         }
 
-        public static void UnHook()
+        public static void Hook()
         {
-            On.PlayMakerFSM.OnEnable -= AllowHorizontalQuake;
+            On.PlayMakerFSM.OnEnable += AllowHorizontalQuake;
+            Enable();
         }
+
+
 
         private static void AllowHorizontalQuake(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
         {
@@ -49,8 +61,8 @@ namespace VerticalCharge
             directionCheck.RemoveActionsOfType<FsmStateAction>();
             directionCheck.AddAction(new ExecuteLambda(() =>
             {
-                if (InputHandler.Instance.inputActions.right.IsPressed) self.SendEvent("RIGHT");
-                else if (InputHandler.Instance.inputActions.left.IsPressed) self.SendEvent("LEFT");
+                if (InputHandler.Instance.inputActions.right.IsPressed && IsActive) self.SendEvent("RIGHT");
+                else if (InputHandler.Instance.inputActions.left.IsPressed && IsActive) self.SendEvent("LEFT");
                 else self.SendEvent("FINISHED");
             }));
 

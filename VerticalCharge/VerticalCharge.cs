@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace VerticalCharge
 {
-    public class VerticalCharge : Mod
+    public class VerticalCharge : Mod, ITogglableMod
     {
         internal static VerticalCharge instance;
 
@@ -26,6 +26,16 @@ namespace VerticalCharge
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ResetCharge;
             FixVerticalTransitions.Hook();
             FixHorizontalTransitions.Hook();
+        }
+
+        public void Unload()
+        {
+            SuperdashFsmEdit.Disable();
+            QuakeFsmEdit.Disable();
+            On.CameraTarget.Update -= FixVerticalCamera;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= ResetCharge;
+            FixVerticalTransitions.UnHook();
+            FixHorizontalTransitions.UnHook();
         }
 
 
