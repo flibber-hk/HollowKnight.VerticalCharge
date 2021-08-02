@@ -41,7 +41,7 @@ namespace VerticalCharge
 
         public override string GetVersion()
         {
-            return "1.0";
+            return "1.0(Quake)";
         }
 
         private void FixVerticalCamera(On.CameraTarget.orig_Update orig, CameraTarget self)
